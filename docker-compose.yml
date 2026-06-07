@@ -1,0 +1,72 @@
+# ============================================================
+# HIS 医院信息系统 — Docker Compose 开发环境
+# 
+# 用法:
+#   docker compose up -d             启动 PostgreSQL
+#   docker compose down              停止
+#   docker compose down -v           停止并删除数据
+# 
+# 配置:
+#   POSTGRES_PASSWORD: PostgreSQL 超级用户密码
+#   HIS_DB_PASSWORD:   HIS 应用用户密码
+# ============================================================
+
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: his-postgres
+    restart: unless-stopped
+    
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres123}
+      POSTGRES_DB: his_db
+    
+    ports:
+      - "${HIS_DB_PORT:-5432}:5432"
+    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # 自动执行初始化脚本
+      - ./his-common/src/main/resources/db/migration/V1__init.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
+    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+    networks:
+      - his-network
+  
+  # 可选: pgAdmin 管理界面 (http://localhost:8080)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: his-pgadmin
+    restart: unless-stopped
+    profiles:
+      - full
+    
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@his.local
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin123}
+    
+    ports:
+      - "8080:80"
+    
+    depends_on:
+      postgres:
+        condition: service_healthy
+    
+    networks:
+      - his-network
+
+volumes:
+  postgres_data:
+    name: his-postgres-data
+
+networks:
+  his-network:
+    name: his-network

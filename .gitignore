@@ -1,0 +1,46 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+*.swp
+*.swo
+*~
+
+# Java
+*.class
+*.jar
+*.war
+hs_err_pid*
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# HIS 构建产物
+dist/
+release/
+Linux-deb/
+custom-runtime/
+jpackage-in/
+jpackage-in-v2/
+jpackage-mod/
+launchers/
+
+# 临时文件
+*.log
+*.tar.gz
+*.zip
+vm_*.txt
+admin_status.txt
+
+# 敏感信息
+*.env
+*.pem

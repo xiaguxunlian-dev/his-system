@@ -11,17 +11,17 @@
 ### 技术架构
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
+┌───────────────────────────────────────────────────────────┐
 │                       HIS 医院信息系统                            │
-├─────────────────────────────────────────────────────────────────┤
+├───────────────────────────────────────────────────────────┤
 │  挂号 │ 门诊 │ 住院 │ 药品 │ 检查 │ 病历 │ 收费 │ 统计 │ 管理   │
-├─────────────────────────────────────────────────────────────────┤
+├───────────────────────────────────────────────────────────┤
 │                    his-common（共享层）                            │
 │    认证服务 │ 数据库迁移 │ 用户管理 │ 通用 UI │ 工具类            │
-├─────────────────────────────────────────────────────────────────┤
+├───────────────────────────────────────────────────────────┤
 │                    PostgreSQL 16                                 │
 │              数据库迁移：V1 → V2 → V3 ...                         │
-└─────────────────────────────────────────────────────────────────┘
+└───────────────────────────────────────────────────────────┘
 ```
 
 ### 技术栈
@@ -31,11 +31,58 @@
 | 语言 | Java 17 LTS |
 | UI 框架 | JavaFX 21 (OpenJFX) |
 | 数据库 | PostgreSQL 16 |
-| 连接池 | HikariCP |
+| 连接池 | HikariCP 5.x |
 | 密码加密 | BCrypt (jbcrypt 0.4) |
 | 构建工具 | Maven 多模块 |
 | 打包工具 | jpackage (JDK 23) |
 | 运行环境 | Windows 10/11, Ubuntu 22.04+ |
+
+---
+
+## 下载安装
+
+### 直接下载（推荐）
+
+前往 [GitHub Releases](https://github.com/xiaguxunlian-dev/his-system/releases) 下载最新版本：
+
+| 平台 | 安装包格式 | 说明 |
+|------|-----------|------|
+| **Windows** | `.exe` 自解压安装程序 | 双击运行，选择解压目录即可，含内置 JRE |
+| **Linux** | `.deb` 安装包 | `sudo dpkg -i xxx.deb`，含内置 JRE |
+
+每个模块独立安装，按需下载：
+
+| 模块 | Windows 安装包 | Linux 安装包 |
+|------|:---:|:---:|
+| 挂号管理 | `HIS-挂号管理-Setup-v1.0.0.exe` (~81 MB) | `his-registration_1.0-1_amd64.deb` (~84 MB) |
+| 门诊工作站 | `HIS-门诊工作站-Setup-v1.0.0.exe` (~81 MB) | `his-outpatient_1.0-1_amd64.deb` (~84 MB) |
+| 住院管理 | `HIS-住院管理-Setup-v1.0.0.exe` (~81 MB) | `his-inpatient_1.0-1_amd64.deb` (~84 MB) |
+| 药品管理 | `HIS-药品管理-Setup-v1.0.0.exe` (~81 MB) | `his-pharmacy_1.0-1_amd64.deb` (~84 MB) |
+| 检查检验 | `HIS-检查检验-Setup-v1.0.0.exe` (~81 MB) | `his-examination_1.0-1_amd64.deb` (~84 MB) |
+| 电子病历 | `HIS-电子病历-Setup-v1.0.0.exe` (~81 MB) | `his-emr_1.0-1_amd64.deb` (~84 MB) |
+| 收费管理 | `HIS-收费管理-Setup-v1.0.0.exe` (~81 MB) | `his-billing_1.0-1_amd64.deb` (~84 MB) |
+| 统计报表 | `HIS-统计报表-Setup-v1.0.0.exe` (~81 MB) | `his-statistics_1.0-1_amd64.deb` (~84 MB) |
+| 系统管理 | `HIS-系统管理-Setup-v1.0.0.exe` (~81 MB) | `his-admin_1.0-1_amd64.deb` (~84 MB) |
+
+### 安装步骤
+
+**Windows：**
+1. 下载对应模块的 `.exe` 安装程序
+2. 双击运行，选择解压目录（建议 `D:\HIS\`）
+3. 首次运行前，确保 PostgreSQL 数据库已启动
+4. 双击桌面快捷方式启动
+
+**Linux (Ubuntu/Debian)：**
+```bash
+# 安装
+sudo dpkg -i his-registration_1.0-1_amd64.deb
+
+# 启动
+his-registration
+
+# 卸载
+sudo dpkg -r his-registration
+```
 
 ---
 
@@ -59,7 +106,7 @@
 
 ### 1. 环境要求
 
-- **JDK 17+** （推荐 JDK 23）
+- **JDK 17+**（推荐 JDK 23）
 - **Maven 3.8+**
 - **PostgreSQL 16**（或 Docker）
 
@@ -89,10 +136,13 @@ mvn clean package -DskipTests
 mvn clean package -pl his-registration -am -DskipTests
 ```
 
-### 4. 运行模块
+### 4. 运行模块（开发模式）
 
 **Windows：**
 ```shell
+# 已打包的模块（推荐）
+dist\HIS-Registration\HIS-Registration.exe
+
 # 开发模式
 cd his-registration
 mvn javafx:run
@@ -100,19 +150,14 @@ mvn javafx:run
 
 **Linux：**
 ```bash
-# 设置数据库环境变量
-export HIS_DB_TYPE=postgresql
-export HIS_DB_HOST=127.0.0.1
-export HIS_DB_PORT=5432
-export HIS_DB_NAME=hisdb
-export HIS_DB_USER=hisuser
-export HIS_DB_PASS=his123
+# 已安装模块
+his-registration
 
-# 运行
-java --module-path /path/to/javafx \
+# 开发模式（需 JavaFX 21+）
+export PATH_TO_FX=/path/to/javafx-sdk-21/lib
+java --module-path $PATH_TO_FX \
      --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base \
-     -cp his-registration-1.0.0.jar \
-     com.his.registration.ui.RegistrationApp
+     -jar his-registration/target/his-registration-1.0.0.jar
 ```
 
 ### 5. 登录账号
@@ -135,7 +180,7 @@ his-system/
 ├── pom.xml                     # 父 POM（多模块聚合）
 ├── docker-compose.yml          # Docker 数据库环境
 ├── README.md                   # 本文件
-├── FAQ.md                      # 常见问题
+├── LICENSE                     # MIT 许可证
 ├── his-common/                 # 共享模块
 │   ├── pom.xml
 │   └── src/main/
@@ -161,6 +206,7 @@ his-system/
 ├── his-admin/                  # 系统管理子系统
 └── scripts/                    # 打包/部署脚本
     ├── package-all-fixed.ps1   # Windows 批量打包
+    ├── build-exe-installers.ps1 # Windows EXE 安装包生成
     ├── setup-database.bat/.sh  # 数据库初始化
     └── init-postgres.sql       # PostgreSQL 初始化 SQL
 ```
@@ -169,46 +215,97 @@ his-system/
 
 ## 打包部署
 
-### Windows
+### Windows（jpackage + 7z SFX）
 
-使用 JDK 23 的 jpackage + 后处理脚本：
-
-```shell
-# 全量打包
+```powershell
+# 生成 app-image（dist/ 目录）
 powershell -File scripts\package-all-fixed.ps1
+
+# 生成 .exe 自解压安装包（installers/windows/ 目录）
+python scripts\build_exe_installers.py
 ```
 
-**关键注意事项：**
-- JavaFX JAR 放在 `app\javafx\` 子目录
-- `app.cfg` 配置：`--module-path=$APPDIR\javafx`
-- 每个模块约 217 MB（含 JRE）
-- 双击 `启动.bat` 即可运行
+生成产物：
+- `dist/HIS-<Module>/` — 自包含应用目录（含 JRE，~214 MB/模块）
+- `installers/windows/HIS-<中文名>-Setup-v1.0.0.exe` — 自解压安装程序（~81 MB/模块）
 
-### Linux
+### Linux（jpackage + dpkg-deb）
 
 ```bash
-# 需在 Linux 环境执行（不支持交叉编译）
+# 在 Linux 环境执行（需 JDK 23 + jpackage）
 bash scripts/package-all.sh
 
-# 输出 .deb 安装包
-Linux-deb/his-registration_1.0-1_amd64.deb
+# 输出到 Linux-deb/ 目录
+ls Linux-deb/
+# his-registration_1.0-1_amd64.deb  ...
 ```
 
 ---
 
 ## 常见问题
 
-详见 [FAQ.md](./FAQ.md)，覆盖以下问题：
+<details>
+<summary><b>登录失败（密码错误）</b></summary>
 
-- 登录失败（密码哈希不匹配）
-- 药品管理 `drug_spec` 列缺失
-- 登录界面顶部乱码
-- EXE 双击无反应
-- JavaFX 模块加载失败
-- 数据库连接配置
-- Linux 无头运行
-- 修改 his-common 后子系统无变化
-- 多模块同时运行
+密码使用 BCrypt 加密存储。如果遇到"用户名或密码错误"：
+1. 确认已执行 V2 迁移（V2__fix_password.sql）
+2. 默认账号：`admin` / `admin123`
+3. 可运行 `scripts\setup-database.bat` 重置数据库
+</details>
+
+<details>
+<summary><b>启动 EXE 无反应或闪退</b></summary>
+
+请检查：
+1. 解压目录不能有中文或空格
+2. 检查 `app/logs/` 下的日志文件
+3. 确认数据库连接配置正确（`app/application.properties`）
+4. 防火墙是否阻止了 5432 端口
+</details>
+
+<details>
+<summary><b>数据库连接失败</b></summary>
+
+默认连接配置：
+- 地址：`localhost:5432`
+- 数据库：`his_db`
+- 用户：`his_user`
+- 密码：`his@2026`
+
+可在 `app/application.properties` 中修改。
+</details>
+
+<details>
+<summary><b>修改共享代码后模块未更新</b></summary>
+
+各模块使用 Fat JAR（maven-assembly-plugin），his-common 的类被打包进每个模块 JAR。
+修改 his-common 后，需要**全量重新编译**：
+```bash
+mvn clean package -DskipTests
+```
+仅编译 his-common 不够，每个模块也需要重新打包。
+</details>
+
+<details>
+<summary><b>Linux 无桌面环境运行</b></summary>
+
+需要安装虚拟显示：
+```bash
+sudo apt install xvfb
+xvfb-run his-registration
+```
+</details>
+
+<details>
+<summary><b>JavaFX 模块加载失败</b></summary>
+
+错误：`Module javafx.base not found`
+
+原因：`app/javafx/` 目录为空或 `app.cfg` 中 `--module-path` 路径错误。
+修复：
+1. 确认 `app/javafx/` 下存在 `javafx-*.jar`
+2. `app/HIS-<Module>.cfg` 中 `--module-path=$APPDIR\javafx`
+</details>
 
 ---
 
@@ -218,7 +315,7 @@ Linux-deb/his-registration_1.0-1_amd64.deb
 
 | 版本 | 文件 | 说明 |
 |:---:|------|------|
-| V1 | `V1__init.sql` | 建表 + 种子数据（6个默认用户、基础字典） |
+| V1 | `V1__init.sql` | 建表 + 种子数据（6 个默认用户、基础字典） |
 | V2 | `V2__fix_password.sql` | 修复 BCrypt 密码哈希 |
 | V3 | `V3__add_drug_inventory_columns.sql` | 补充 drug_inventory 表字段 |
 

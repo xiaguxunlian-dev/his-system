@@ -1,5 +1,9 @@
 # HIS 医院信息系统 v1.0
 
+[![Build Status](https://github.com/xiaguxunlian-dev/his-system/actions/workflows/build.yml/badge.svg)](https://github.com/xiaguxunlian-dev/his-system/actions/workflows/build.yml)
+[![Release](https://img.shields.io/github/v/release/xiaguxunlian-dev/his-system)](https://github.com/xiaguxunlian-dev/his-system/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 > **Hospital Information System** — Java 17 + JavaFX 21 + PostgreSQL 16，9 个独立子系统模块
 
 ---

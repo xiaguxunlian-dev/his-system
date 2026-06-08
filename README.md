@@ -54,15 +54,15 @@
 
 | 模块 | Windows 安装包 | Linux 安装包 |
 |------|:---:|:---:|
-| 挂号管理 | `HIS-挂号管理-Setup-v1.0.0.exe` (~81 MB) | `his-registration_1.0-1_amd64.deb` (~84 MB) |
-| 门诊工作站 | `HIS-门诊工作站-Setup-v1.0.0.exe` (~81 MB) | `his-outpatient_1.0-1_amd64.deb` (~84 MB) |
-| 住院管理 | `HIS-住院管理-Setup-v1.0.0.exe` (~81 MB) | `his-inpatient_1.0-1_amd64.deb` (~84 MB) |
-| 药品管理 | `HIS-药品管理-Setup-v1.0.0.exe` (~81 MB) | `his-pharmacy_1.0-1_amd64.deb` (~84 MB) |
-| 检查检验 | `HIS-检查检验-Setup-v1.0.0.exe` (~81 MB) | `his-examination_1.0-1_amd64.deb` (~84 MB) |
-| 电子病历 | `HIS-电子病历-Setup-v1.0.0.exe` (~81 MB) | `his-emr_1.0-1_amd64.deb` (~84 MB) |
-| 收费管理 | `HIS-收费管理-Setup-v1.0.0.exe` (~81 MB) | `his-billing_1.0-1_amd64.deb` (~84 MB) |
-| 统计报表 | `HIS-统计报表-Setup-v1.0.0.exe` (~81 MB) | `his-statistics_1.0-1_amd64.deb` (~84 MB) |
-| 系统管理 | `HIS-系统管理-Setup-v1.0.0.exe` (~81 MB) | `his-admin_1.0-1_amd64.deb` (~84 MB) |
+| 挂号管理 | `HIS-Registration-Setup-v1.0.0.exe` (~81 MB) | `his-registration_1.0-1_amd64.deb` (~84 MB) |
+| 门诊工作站 | `HIS-Outpatient-Setup-v1.0.0.exe` (~81 MB) | `his-outpatient_1.0-1_amd64.deb` (~84 MB) |
+| 住院管理 | `HIS-Inpatient-Setup-v1.0.0.exe` (~81 MB) | `his-inpatient_1.0-1_amd64.deb` (~84 MB) |
+| 药品管理 | `HIS-Pharmacy-Setup-v1.0.0.exe` (~81 MB) | `his-pharmacy_1.0-1_amd64.deb` (~84 MB) |
+| 检查检验 | `HIS-Examination-Setup-v1.0.0.exe` (~81 MB) | `his-examination_1.0-1_amd64.deb` (~84 MB) |
+| 电子病历 | `HIS-Emr-Setup-v1.0.0.exe` (~81 MB) | `his-emr_1.0-1_amd64.deb` (~84 MB) |
+| 收费管理 | `HIS-Billing-Setup-v1.0.0.exe` (~81 MB) | `his-billing_1.0-1_amd64.deb` (~84 MB) |
+| 统计报表 | `HIS-Statistics-Setup-v1.0.0.exe` (~81 MB) | `his-statistics_1.0-1_amd64.deb` (~84 MB) |
+| 系统管理 | `HIS-Admin-Setup-v1.0.0.exe` (~81 MB) | `his-admin_1.0-1_amd64.deb` (~84 MB) |
 
 ### 安装步骤
 
